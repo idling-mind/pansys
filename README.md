@@ -1,5 +1,7 @@
 # pansys
 
+[![Documentation Status](//readthedocs.org/projects/pansys/badge/?version=latest)](https://pansys.readthedocs.io/en/latest/?badge=latest)
+
 Work interactively with ANSYS mechanical APDL and python.
 
 The pansys module helps you interact with ansys through python. Starting a
