@@ -1,9 +1,5 @@
 #!/opt/anaconda3/bin/python3
 # -*- coding: utf-8 -*-
-import os
-os.environ['HTTP_PROXY']='http://gasproxy.aeroes.internal:8080'
-os.environ['HTTPS_PROXY']='https://gasproxy.aeroes.internal:8080'
-#
 # pansys documentation build configuration file, created by
 # sphinx-quickstart on Mon Oct 16 13:30:20 2017.
 #
@@ -35,7 +31,6 @@ os.environ['HTTPS_PROXY']='https://gasproxy.aeroes.internal:8080'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'IPython.sphinxext.ipython_console_highlighting',
     'nbsphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
@@ -60,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'pansys'
-copyright = '2017, Najeem Muhammed'
+copyright = '2018, Najeem Muhammed'
 author = 'Najeem Muhammed'
 
 # The version info for the project you're documenting, acts as replacement for
