@@ -54,3 +54,7 @@ is ``ansys150``. You can override it with the ``start_command`` keyword argument
 ```python
     a = Ansys(startcommand='my_ansys_command')
 ```
+
+## Documentation
+
+You can find the documentation at [readthedocs](https://pansys.readthedocs.io/en/latest/index.html)
