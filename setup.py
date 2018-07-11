@@ -5,16 +5,20 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pansys",
-    version="1.0",
+    version="0.1",
+    url="https://github.com/idling-mind/pansys",
     author="Najeem Muhammed",
+    author_email="najeem@gmail.com",
     description="Work with Ansys through python",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
     classifiers=(
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Operating System :: POSIX",
+        "Topic :: Scientific/Engineering",
     ),
     install_requires=[
         "pexpect" ,"pandas"
