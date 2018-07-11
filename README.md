@@ -41,3 +41,16 @@ You can also start an ansys session in a remote machine. You will have to set up
 ```
 
 Look into the documentation to get to know the API better.
+
+## Installation
+
+```sh
+    pip install pansys
+```
+
+The module assumes that you have ANSYS already installed in your machine. Also, the default command that the module is using
+is ``ansys150``. You can override it with the ``start_command`` keyword argument.
+
+```python
+    a = Ansys(start_command='my_ansys_command')
+```
