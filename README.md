@@ -52,5 +52,5 @@ The module assumes that you have ANSYS already installed in your machine. Also, 
 is ``ansys150``. You can override it with the ``start_command`` keyword argument.
 
 ```python
-    a = Ansys(start_command='my_ansys_command')
+    a = Ansys(startcommand='my_ansys_command')
 ```
