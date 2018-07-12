@@ -179,7 +179,7 @@ class Ansys(object):
                 output from ansys after executing ``command_string``
             output_function (function): Optional. A function which will process the output
                 from ansys. The output will be passed line by line
-                to this function. silent option should be set to True
+                to this function. silent option should be set to False
                 for this to work.
 
         Returns:
