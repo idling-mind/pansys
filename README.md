@@ -1,6 +1,6 @@
 # pansys
 
-[![Documentation Status](//readthedocs.org/projects/pansys/badge/?version=latest)](https://pansys.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](http://readthedocs.org/projects/pansys/badge/?version=latest)](https://pansys.readthedocs.io/en/latest/?badge=latest)
 
 Work interactively with ANSYS mechanical APDL and python.
 
