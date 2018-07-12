@@ -1,4 +1,7 @@
-# Installing pansys
+.. _installation:
+
+Installing pansys
+=================
 
 For pansys to work, you need ANSYS installed on a linux machine.
 
