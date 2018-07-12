@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pansys",
-    version="0.1",
+    version="0.1.1",
     url="https://github.com/idling-mind/pansys",
     author="Najeem Muhammed",
     author_email="najeem@gmail.com",
