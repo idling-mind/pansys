@@ -60,15 +60,15 @@ class Ansys(object):
         """bool: Flag if set to True will delete the directory where ansys was
         running"""
         # List of ansys prompts which will mark the end of a command
-        self.expect_list = [' BEGIN:\r\n', 
-                            ' PREP7:\r\n', 
-                            ' POST1:\r\n', 
-                            ' SOLU_LS1:\r\n', 
-                            ' POST26:\r\n', 
-                            ' AUX12:\r\n', 
-                            ' AUX15:\r\n', 
-                            ' AUX2:\r\n', 
-                            ' AUX3:\r\n']
+        self.expect_list = ['BEGIN:', 
+                            'PREP7:', 
+                            'POST1:', 
+                            'SOLU_LS[1-9]+:', 
+                            'POST26:', 
+                            'AUX12:', 
+                            'AUX15:', 
+                            'AUX2:', 
+                            'AUX3:']
         self.warn_list = ['WARNING','NOTE','ERROR']
         # Checking and setting the ansys working directory
         if startfolder is None:
@@ -203,7 +203,13 @@ class Ansys(object):
                     # Function to process output, default is print function
                     ofunc = kwargs.get("output_function", print)
                     ofunc(line.strip())
-                if any(x in line for x in self.expect_list):
+                if '[y/n]' in line:
+                # In case of prompts to continue or not, select continue
+                # Assumption here is that pansys is not a replacement for regular ANSYS and
+                # instead it makes it possible to automate complicated things. So the user
+                # already knows what he is going to do.
+                    self.process.sendline('y')
+                if any(re.findall(x,line) for x in self.expect_list):
                     break
             return
     
