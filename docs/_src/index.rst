@@ -42,7 +42,7 @@ You can also start an ansys session in a remote machine. You will have to set up
 
 .. code-block:: python
 
-    ans = Ansys(host="aerox9999")
+    ans = Ansys(host="remotesystem")
 
 Look into the documentation to get to know the API better.
 
