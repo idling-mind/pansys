@@ -54,7 +54,12 @@ class Ansys(object):
             It is expected that you have set up ssh-keys in the remote system for this to work.
 
     """
-    def __init__(self, startcommand = "ansys150", startfolder=None, cleanup=False, host=None):
+    def __init__(self, startcommand=None, startfolder=None, cleanup=False, host=None):
+        if startcommand is None:
+            if 'PANSYS_STARTCOMMAND' in os.environ.keys():
+                startcommand = os.environ['PANSYS_STARTCOMMAND']
+            else:
+                startcommand = 'ansys150'
         self._startcommand = startcommand #The command that wil be used to open ansys
         self.cleanup = cleanup # If True delete the working directory after exiting ansys
         """bool: Flag if set to True will delete the directory where ansys was
