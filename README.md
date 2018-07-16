@@ -46,7 +46,10 @@ Look into the documentation to get to know the API better.
 
 ## Installation
 
-```sh
+As of now, pansys is supported only on Linux systems. You will also need ANSYS installation on your computer
+(or on the remote system, if you are using the ``host`` option when you're starting pansys).
+
+```bash
     pip install pansys
 ```
 
