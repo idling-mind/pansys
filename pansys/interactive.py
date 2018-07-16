@@ -32,6 +32,12 @@ class Ansys(object):
     shown below:
 
         >>> ans = Ansys(startcommand="ansys130")
+    
+    If you end up changing the ``startcommand`` everytime, you can as well set an
+    environment variable, ``PANSYS_STARTCOMMAND`` to the command of your choice. If this
+    environment variable is found, the value of this environment variable will be used
+    for starting ``Ansys`` session. However, if you start the ``Ansys`` session with the
+    ``startcommand`` specified, then the specified command will take precedence.
         
     You can also change the folder where you want Ansys to start by setting the
     ``startfolder`` parameter.
