@@ -60,6 +60,10 @@ is ``ansys150``. You can override it with the ``start_command`` keyword argument
     a = Ansys(startcommand='my_ansys_command')
 ```
 
+If you want to change the default start command from ``ansys150``, you can set an environment variable ``PANSYS_STARTCOMMAND``.
+The value of this environment variable will be used as the start command. This value will be overridden if you explicitly call
+``Ansys`` session with a ``startcommand``.
+
 ## Documentation
 
 You can find the documentation at [readthedocs](https://pansys.readthedocs.io/en/latest/index.html)
