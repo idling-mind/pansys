@@ -8,6 +8,7 @@ import os
 import re
 from datetime import datetime
 import pexpect
+import logging
 
 import pandas as pd
 
@@ -207,21 +208,28 @@ class Ansys(object):
             self.process.sendline(commands[0])
             # self._output will contain the output of last executed command
             self._output = ""
-            for line in self.process:
-                self._output += line
+            for chunk in self.process:
+                self._output += chunk
                 # Checking if the command was executed silently or not
                 if not kwargs.get("silent", True):
                     # Function to process output, default is print function
                     ofunc = kwargs.get("output_function", print)
-                    ofunc(line.strip())
-                if '[y/n]' in line:
+                    ofunc(chunk.strip())
+                if '[y/n]' in chunk:
                 # In case of prompts to continue or not, select continue
                 # Assumption here is that pansys is not a replacement for regular ANSYS and
                 # instead it makes it possible to automate complicated things. So the user
                 # already knows what he is going to do.
                     self.process.sendline('y')
-                if any(re.findall(x,line) for x in self.expect_list):
+                if any(re.findall(x,chunk) for x in self.expect_list):
                     break
+            for chunk in self._output.split('\r\n\r\n'):
+                if '*** ERROR ***' in chunk:
+                    raise RuntimeError(chunk)
+                if '*** WARNING ***' in chunk:
+                    logging.warning(chunk)
+                if '*** NOTE ***' in chunk:
+                    logging.info(chunk)
             return
     
     def plot(self,command_string):
