@@ -12,7 +12,7 @@ import logging
 
 import pandas as pd
 
-from .utility_functions import return_value
+from .utility_functions import return_value, calculate_skip_rows
 
 class Ansys(object):
     """Ansys session class
@@ -370,5 +370,5 @@ class Ansys(object):
         if "delim_whitespace" not in kwargs:
             kwargs["delim_whitespace"]=True
         if "skiprows" not in kwargs:
-            kwargs["skiprows"] = 2
+            kwargs["skiprows"] = calculate_skip_rows(f, 5)
         return pd.read_table(os.path.join(self._wd,"out.out"), **kwargs)
