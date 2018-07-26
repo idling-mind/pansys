@@ -70,7 +70,9 @@ class Ansys(object):
         self._startcommand = startcommand #The command that wil be used to open ansys
         self.cleanup = cleanup # If True delete the working directory after exiting ansys
         """bool: Flag if set to True will delete the directory where ansys was
-        running"""
+        running""" 
+        # Command buffer to store ansys commands with delayed flag
+        self.command_buffer = ""
         # List of ansys prompts which will mark the end of a command
         self.expect_list = ['BEGIN:', 
                             'PREP7:', 
@@ -189,6 +191,11 @@ class Ansys(object):
             command_string (str): Required. The string containing ansys command
             silent (bool): Optional. Boolean value which when set true will print the
                 output from ansys after executing ``command_string``
+            delayed (bool): Optional. Boolean value when set to true will delay the command
+                execution until the next ``send`` command without delayed flag. All commands
+                sent with a delayed flag will be stored in a file buffer which will be read in
+                to Ansys using the ``/input`` command. Use this option when you want to pass
+                large number of commands.
             output_function (function): Optional. A function which will process the output
                 from ansys. The output will be passed line by line
                 to this function. silent option should be set to False
@@ -199,6 +206,14 @@ class Ansys(object):
 
         """
         # Commands are split in to separate commands and executed recursively
+        if kwargs.get("delayed", False):
+            self.command_buffer += command_string + "\n"
+            return
+        elif self.command_buffer is not "":
+            with open(os.path.join(self.wd, 'input.inp'), 'w') as f:
+                f.writelines(self.command_buffer)
+            self.command_buffer = ""
+            self.send('/input,input,inp')
         commands = command_string.split("\n")
         if len(commands) > 1:
             for command in commands:
