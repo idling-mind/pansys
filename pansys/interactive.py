@@ -274,6 +274,16 @@ class Ansys(object):
         self.send('/input,input,inp', **kwargs) 
         self.__buffer_file = open(self.__buffer_file.name, 'w')
     
+    def get_queue(self):
+        """Returns a generator with the commands in the current queue, submitted using the 
+        :meth:`pansys.Ansys.queue` method.
+
+        Returns:
+            object: A file object pointing to the command list
+        
+        """
+        return open(self.__buffer_file.name, 'r')
+    
     def plot(self,command_string):
         """Plot anything in ansys
         
