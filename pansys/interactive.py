@@ -81,7 +81,8 @@ class Ansys(object):
                             'AUX15:', 
                             'AUX2:', 
                             'AUX3:']
-        self.warn_list = ['WARNING','NOTE','ERROR']
+        self.prompt_list = ['\[y\/n\]',
+                            'SHOULD INPUT PROCESSING BE SUSPENDED\?',]
         # Checking and setting the ansys working directory
         if startfolder is None:
             #If start folder is not existing, create a folder with current data
@@ -217,21 +218,21 @@ class Ansys(object):
                     # Function to process output, default is print function
                     ofunc = kwargs.get("output_function", print)
                     ofunc(chunk.strip())
-                if '[y/n]' in chunk:
-                # In case of prompts to continue or not, select continue
-                # Assumption here is that pansys is not a replacement for regular ANSYS and
-                # instead it makes it possible to automate complicated things. So the user
-                # already knows what he is going to do.
-                    self.process.sendline('y')
+                if any(re.findall(x,chunk) for x in self.prompt_list):
+                    logging.warning(chunk)
+                    break
                 if any(re.findall(x,chunk) for x in self.expect_list):
                     break
-            for chunk in self._output.split('\r\n\r\n'):
                 if '*** ERROR ***' in chunk:
-                    raise RuntimeError(chunk)
+                    # Each block of ansys output is separated by two sets of newline characters
+                    msg = [x for x in chunk.split('\r\n\r\n') if '*** ERROR ***' in x][0]
+                    raise RuntimeError(msg)
                 if '*** WARNING ***' in chunk:
-                    logging.warning(chunk)
-                if '*** NOTE ***' in chunk:
-                    logging.info(chunk)
+                    msg = [x for x in chunk.split('\r\n\r\n') if '*** WARNING ***' in x][0]
+                    logging.warning(msg)
+                if '*** NOTE ***' in chunk: 
+                    msg = [x for x in chunk.split('\r\n\r\n') if '*** NOTE ***' in x][0]
+                    logging.info(msg)
             return
 
     def queue(self, command_string):
