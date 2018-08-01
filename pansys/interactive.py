@@ -260,8 +260,8 @@ class Ansys(object):
         use the :meth:`pansys.Ansys.run_queue` method.
 
         Args:
-            command_string (str): Required. The command that you want to add 
-            to the queue.
+            command_string (str): Required. The command that you want to add
+                to the queue.
 
         Returns:
             None
@@ -282,7 +282,7 @@ class Ansys(object):
         arguments of the same method.
 
         Args:
-            See keyword arguments for :meth:`pansys.Ansys.send`
+            kwargs: Optional. See keyword args for :meth:`pansys.Ansys.send`
 
         Returns:
             None
