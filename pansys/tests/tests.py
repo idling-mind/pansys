@@ -135,7 +135,8 @@ class TestQueue(unittest.TestCase):
             et,,188
             n,,
             """)
-        for i in range(10):
+        nspokes=10
+        for i in range(nspokes):
             a.queue(f'n,,1,{i/360*nspokes}')
             a.queue(f'e,1,{i+2}')
         a.run_queue()
