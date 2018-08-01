@@ -48,7 +48,7 @@ class TestStartup(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 
 class TestSendCommand(unittest.TestCase):
@@ -75,7 +75,7 @@ class TestSendCommand(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 
 class TestGet(unittest.TestCase):
@@ -92,7 +92,7 @@ class TestGet(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 
 class TestGetList(unittest.TestCase):
@@ -103,14 +103,14 @@ class TestGetList(unittest.TestCase):
         n = a.get_list("nlist")
         self.assertEqual(n.NODE.max(), 11)
         self.assertEqual(n.X.max(), 1)
-        e = a.get_list("elist,,,,1")
+        e = a.get_list("elist,,,,1", skiprows=2)
         self.assertEqual(e.ELEM.max(), 10)
 
     def tearDown(self):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 
 class TestPlot(unittest.TestCase):
@@ -124,7 +124,31 @@ class TestPlot(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
+
+class TestQueue(unittest.TestCase):
+    def test_run_queue(self):
+        """Check if queuing works"""
+        a = Ansys(cleanup=True)
+        a.send("""
+            /prep7
+            et,,188
+            n,,
+            """)
+        for i in range(10):
+            a.queue(f'n,,1,{i/360*nspokes}')
+            a.queue(f'e,1,{i+2}')
+        a.run_queue()
+        g = a.get("node","","count")
+        self.assertEqual(g, 11)
+        g = a.get("node",1,"LOC", "X")
+        self.assertEqual(g, 0)
+
+    def tearDown(self):
+        import shutil
+        import glob
+        for path in glob.glob("pansys_*"):
+            shutil.rmtree(path, ignore_errors=True)
 
 
 def createWheelModel(nspokes):
