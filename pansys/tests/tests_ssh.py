@@ -48,7 +48,7 @@ class TestStartup(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 
 class TestSendCommand(unittest.TestCase):
@@ -75,7 +75,7 @@ class TestSendCommand(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 class TestGet(unittest.TestCase):
 
@@ -91,7 +91,7 @@ class TestGet(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 class TestGetList(unittest.TestCase):
 
@@ -101,14 +101,14 @@ class TestGetList(unittest.TestCase):
         n = a.get_list("nlist")
         self.assertEqual(n.NODE.max(), 11)
         self.assertEqual(n.X.max(), 1)
-        e = a.get_list("elist,,,,1")
+        e = a.get_list("elist,,,,1", skiprows=2)
         self.assertEqual(e.ELEM.max(), 10)
 
     def tearDown(self):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 class TestPlot(unittest.TestCase):
     def test_plot(self):
@@ -121,7 +121,7 @@ class TestPlot(unittest.TestCase):
         import shutil
         import glob
         for path in glob.glob("pansys_*"):
-            shutil.rmtree(path)
+            shutil.rmtree(path, ignore_errors=True)
 
 def createWheelModel(nspokes):
     a = Ansys(host='aerox33798',cleanup=True)
