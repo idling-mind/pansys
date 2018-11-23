@@ -77,6 +77,8 @@ class Ansys(object):
         # The command that wil be used to open ansys
         self.cleanup = cleanup
         # If True delete the working directory after exiting ansys
+        self.silent = True
+        # If True, the commands will be in silent mode always
 
         # List of ansys prompts which will mark the end of a command
         self.expect_list = ['BEGIN:',
@@ -140,7 +142,7 @@ class Ansys(object):
         self.send("""
             /PAGE,99999999,256,99999999,240
             /HEADER,OFF,OFF,OFF,OFF,ON,OFF
-            /FORMAT,12,E,16,8
+            /FORMAT,12,E,20,8
             /RGB,INDEX,100,100,100,0
             /RGB,INDEX,0,0,0,15
         """)
@@ -227,7 +229,7 @@ class Ansys(object):
             for chunk in self.process:
                 self._output += chunk
                 # Checking if the command was executed silently or not
-                if not kwargs.get("silent", True):
+                if not kwargs.get("silent", self.silent):
                     # Function to process output, default is print function
                     ofunc = kwargs.get("output_function", print)
                     ofunc(chunk.strip())
@@ -442,6 +444,7 @@ class Ansys(object):
             pandas.Dataframe: A :class:`pandas.DataFrame` with the data that
                 ansys returned when ``command_string`` was passed.
         """
+        command_string = command_string.lower()
         f = self.get_output(command_string)
         if "delim_whitespace" not in kwargs:
             kwargs["delim_whitespace"] = True
