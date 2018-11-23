@@ -137,8 +137,8 @@ class TestQueue(unittest.TestCase):
             """)
         nspokes=10
         for i in range(nspokes):
-            a.queue(f'n,,1,{i/360*nspokes}')
-            a.queue(f'e,1,{i+2}')
+            a.queue('n,,1,{}'.format(i/360*nspokes))
+            a.queue('e,1,{}'.format(i+2))
         a.run_queue()
         g = a.get("node","","count")
         self.assertEqual(g, 11)

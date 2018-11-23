@@ -7,18 +7,18 @@ class TestStartup(unittest.TestCase):
     def test_wrong_command(self):
         """Checking if a wrong command will raise an OSError"""
         with self.assertRaises(OSError):
-            a = Ansys(host='aerox33798',startcommand="ansys1212121")
-            a = Ansys(host='aerox33798',startcommand="ansys150 -p abcd")
-            a = Ansys(host='aerox33798',startcommand="ls")
+            a = Ansys(host='aerox33799',startcommand="ansys1212121")
+            a = Ansys(host='aerox33799',startcommand="ansys150 -p abcd")
+            a = Ansys(host='aerox33799',startcommand="ls")
 
     def test_notnone_default(self):
         """Check if ansys was able to start normally"""
-        a = Ansys(host='aerox33798',)
+        a = Ansys(host='aerox33799',)
         self.assertNotEqual(a, None)
 
     def test_notnone_custom(self):
         """Check if a custom version of ansys was able to start"""
-        a = Ansys(host='aerox33798',startcommand="ansys130")
+        a = Ansys(host='aerox33799',startcommand="ansys130")
         self.assertNotEqual(a, None)
 
     def test_startfolder_nonexisting(self):
@@ -26,20 +26,20 @@ class TestStartup(unittest.TestCase):
         working directory"""
         sf = "NoneExisting"
         with self.assertRaises(OSError):
-            a = Ansys(host='aerox33798',startfolder=sf)
+            a = Ansys(host='aerox33799',startfolder=sf)
     
     def test_startfolder_none(self):
         """Check if working directory is created if nothing is given as input"""
-        a = Ansys(host='aerox33798',)
+        a = Ansys(host='aerox33799',)
         self.assertEqual(os.path.isdir(a.wd), True)
 
     def test_cleanup(self):
         """Test if cleanup flag is deleting the folder and vice versa"""
-        a = Ansys(host='aerox33798',cleanup=True)
+        a = Ansys(host='aerox33799',cleanup=True)
         wd = a.wd
         a = None
         self.assertEqual(os.path.isdir(wd), False)
-        a = Ansys(host='aerox33798',cleanup=False)
+        a = Ansys(host='aerox33799',cleanup=False)
         wd = a.wd
         a = None
         self.assertEqual(os.path.isdir(wd), True)
@@ -55,13 +55,13 @@ class TestSendCommand(unittest.TestCase):
 
     def test_version(self):
         """Checking version of ansys"""
-        a = Ansys(host='aerox33798',)
+        a = Ansys(host='aerox33799',)
         self.assertEqual(a.version, 15)
 
     def test_set_get_ansvar(self):
         """Test if send command is working by setting an ansys variable and
         retrieving it. """
-        a = Ansys(host='aerox33798',)
+        a = Ansys(host='aerox33799',)
         a.send("/prep7")
         a.send("myvar=29323")
         a.send("/com %%myvar%")
@@ -124,7 +124,7 @@ class TestPlot(unittest.TestCase):
             shutil.rmtree(path, ignore_errors=True)
 
 def createWheelModel(nspokes):
-    a = Ansys(host='aerox33798',cleanup=True)
+    a = Ansys(host='aerox33799',cleanup=True)
     a.send("""
     /prep7
     et,,188
